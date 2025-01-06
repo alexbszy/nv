@@ -53,7 +53,7 @@ local conf = {
 require("gp").setup(conf)
 
 -- Normal mode mappings
-vim.api.nvim_set_keymap("n", "<leader><leader>", "<cmd>GpChatToggle<cr>", { noremap = true, silent = true, desc = "Toggle Chat" })
+vim.api.nvim_set_keymap("n", "<leader>m", "<cmd>GpChatToggle<cr>", { noremap = true, silent = true, desc = "Toggle Chat" })
 vim.api.nvim_set_keymap("n", "<leader><cr>", "<cmd>GpChatRespond<cr>", { noremap = true, silent = true, desc = "Chat Response" })
 vim.api.nvim_set_keymap("n", "<leader>n", "<cmd>GpNextAgent<cr>", { noremap = true, silent = true, desc = "Next Agent" })
 vim.api.nvim_set_keymap("n", "<leader>c", "<cmd>GpChatNew<cr>", { noremap = true, silent = true, desc = "New Chat" })

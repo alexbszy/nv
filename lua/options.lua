@@ -58,13 +58,3 @@ vim.keymap.set('n', '<leader>j', '<C-w>j', { desc = "Move to below pane", norema
 vim.keymap.set('n', '<leader>k', '<C-w>k', { desc = "Move to above pane", noremap = true, silent = true })
 vim.keymap.set('n', '<leader>l', '<C-w>l', { desc = "Move to right pane", noremap = true, silent = true })
 
-vim.o.splitright = true
-vim.api.nvim_create_autocmd("WinNew", {
-    pattern = "*",
-    callback = function()
-        if vim.fn.winnr() ~= vim.fn.winnr("$") then -- Check if this is the right-most window
-            vim.cmd("wincmd L") -- Move the newly created split to the far right
-        end
-    end,
-})
-

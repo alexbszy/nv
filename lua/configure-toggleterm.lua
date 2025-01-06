@@ -1,18 +1,19 @@
 require("toggleterm").setup({
   direction = "float",
-  open_mapping = [[<leader>t]], -- Mapping to toggle the terminal
-  shade_terminals = true,   -- Shade terminal backgrounds
-  persist_size = true,      -- Retain the size of the terminal split
+  shade_terminals = true,
+  persist_size = true,
+  start_in_insert = true,
 })
 
-function _G.set_terminal_keymaps()
-  local opts = { buffer = 0 }
-  vim.keymap.set('t', '<esc>', [[<C-\><C-n>]], opts) -- Exit terminal mode
-  vim.keymap.set('t', '<C-h>', [[<Cmd>wincmd h<CR>]], opts) -- Move to the left pane
-  vim.keymap.set('t', '<C-j>', [[<Cmd>wincmd j<CR>]], opts) -- Move to the bottom pane
-  vim.keymap.set('t', '<C-k>', [[<Cmd>wincmd k<CR>]], opts) -- Move to the top pane
-  vim.keymap.set('t', '<C-l>', [[<Cmd>wincmd l<CR>]], opts) -- Move to the right pane
-end
+vim.keymap.set('n', '<leader><leader>', function()
+  -- Open or toggle the terminal
+  require("toggleterm").toggle()
+  -- Use a slight delay to ensure terminal mode is activated
+  vim.defer_fn(function()
+    vim.cmd("startinsert")
+  end, 10) -- 10ms delay
+end, { noremap = true, silent = true })
 
-vim.cmd('autocmd! TermOpen term://* lua set_terminal_keymaps()')
+-- Keymap to close the terminal with <Esc> in terminal mode
+vim.keymap.set('t', '<Esc>', [[<C-\><C-n><Cmd>ToggleTerm<CR>]], { noremap = true, silent = true })
 
