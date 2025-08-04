@@ -77,7 +77,7 @@ vim.keymap.set('i', '<CR>', [[
 
 require('oil').setup()
 
-require("mru").setup { ignore_filetypes = { "oil" } }
+require("mru").setup { ignore_patterns = { "oil:*", '/private/*' } }
 
 require('Comment').setup({
   toggler   = { line = '<leader>/', block = '<leader>*' },
