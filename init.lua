@@ -11,6 +11,7 @@ vim.o.swapfile       = false
 vim.o.undofile       = true
 vim.o.clipboard      = 'unnamedplus'
 vim.o.timeout        = true
+vim.o.winborder      = 'rounded'
 
 vim.opt.tabstop     = 4
 vim.opt.shiftwidth  = 4
@@ -20,17 +21,18 @@ vim.opt.expandtab   = true
 vim.pack.add({
     "https://github.com/navarasu/onedark.nvim",
     "https://github.com/nvim-treesitter/nvim-treesitter",
+    "https://github.com/neovim/nvim-lspconfig",
     "https://github.com/ibhagwan/fzf-lua",
     "https://github.com/stevearc/oil.nvim",
     "https://github.com/numToStr/Comment.nvim",
     "https://github.com/tpope/vim-fugitive",
     "https://github.com/lewis6991/gitsigns.nvim",
-    "https://github.com/ggandor/leap.nvim",
     "https://github.com/54322/mru.nvim",
 })
 
 vim.cmd("colorscheme onedark")
 
+-- Blue and white highlight colors
 vim.api.nvim_set_hl(0, 'Visual', { bg = '#2563eb', fg = '#ffffff' })
 vim.api.nvim_set_hl(0, 'Search', { bg = '#2563eb', fg = '#ffffff' })
 vim.api.nvim_set_hl(0, 'IncSearch', { bg = '#2563eb', fg = '#ffffff' })
@@ -45,6 +47,18 @@ require('nvim-treesitter.configs').setup {
   highlight    = { enable = true },
 }
 
+vim.lsp.enable({ 'pyright' })
+
+vim.api.nvim_create_autocmd('LspAttach', {
+  group = vim.api.nvim_create_augroup('lsp_attach', {}),
+  callback = function(args)
+    local client = vim.lsp.get_client_by_id(args.data.client_id)
+    if client:supports_method('textDocument/completion') then
+      vim.lsp.completion.enable(true, client.id, args.buf, { autotrigger = true })
+    end
+  end,
+})
+
 require("fzf-lua").setup()
 
 require('oil').setup()
@@ -54,9 +68,7 @@ require('Comment').setup({
   opleader  = { line = '<leader>/', block = '<leader>*' },
 })
 
-require('leap').add_default_mappings()
-
-require("mru").setup { ignore_filetypes = { "oil" } }
+require("mru").setup { ignore_filetypes = { "oil", "/private" } }
 
 vim.keymap.set('n', '<leader>s',         ':update<cr>:source<cr>')
 vim.keymap.set('n', '<leader><leader>',  ':write<cr>')
