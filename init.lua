@@ -68,7 +68,7 @@ require('Comment').setup({
   opleader  = { line = '<leader>/', block = '<leader>*' },
 })
 
-require("mru").setup { ignore_filetypes = { "oil", "/private" } }
+require("mru").setup { ignore_filetypes = { "oil" } }
 
 vim.keymap.set('n', '<leader>s',         ':update<cr>:source<cr>')
 vim.keymap.set('n', '<leader><leader>',  ':write<cr>')
