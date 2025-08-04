@@ -57,7 +57,17 @@ vim.api.nvim_create_autocmd('LspAttach', {
     end
   end,
 })
-vim.cmd("set completeopt+=noselect")
+vim.o.completeopt = "menu,menuone,noselect"
+
+vim.keymap.set('i', '<Tab>', [[
+  pumvisible() ? "\<C-n>" : "\<Tab>"
+]], { expr = true, noremap = true })
+vim.keymap.set('i', '<S-Tab>', [[
+  pumvisible() ? "\<C-p>" : "\<S-Tab>"
+]], { expr = true, noremap = true })
+vim.keymap.set('i', '<CR>', [[
+  pumvisible() ? "\<C-y>" : "\<CR>"
+]], { expr = true, noremap = true })
 
 require("fzf-lua").setup()
 
