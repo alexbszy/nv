@@ -20,22 +20,19 @@ vim.opt.expandtab   = true
 
 vim.pack.add({
     "https://github.com/navarasu/onedark.nvim",
+    "https://github.com/ibhagwan/fzf-lua",
     "https://github.com/nvim-treesitter/nvim-treesitter",
     "https://github.com/neovim/nvim-lspconfig",
-    "https://github.com/ibhagwan/fzf-lua",
     "https://github.com/stevearc/oil.nvim",
-    "https://github.com/numToStr/Comment.nvim",
+    "https://github.com/54322/mru.nvim",
     "https://github.com/tpope/vim-fugitive",
     "https://github.com/lewis6991/gitsigns.nvim",
-    "https://github.com/54322/mru.nvim",
+    "https://github.com/numToStr/Comment.nvim",
 })
 
 vim.cmd("colorscheme onedark")
 
-vim.api.nvim_set_hl(0, 'Visual', { bg = '#2563eb', fg = '#ffffff' })
-vim.api.nvim_set_hl(0, 'Search', { bg = '#2563eb', fg = '#ffffff' })
-vim.api.nvim_set_hl(0, 'IncSearch', { bg = '#2563eb', fg = '#ffffff' })
-vim.api.nvim_set_hl(0, 'MatchParen', { bg = '#2563eb', fg = '#ffffff' })
+require("fzf-lua").setup()
 
 require('nvim-treesitter.configs').setup {
   ensure_installed = {
@@ -47,6 +44,15 @@ require('nvim-treesitter.configs').setup {
 }
 
 vim.lsp.enable({ 'pyright' })
+
+vim.keymap.set('n', '<leader>d', vim.lsp.buf.definition, {
+  noremap = true, silent = true,
+})
+
+local opts = { noremap = true, silent = true }
+vim.keymap.set('n', '<leader>r', function()
+  require('fzf-lua').lsp_references()
+end, opts)
 
 vim.api.nvim_create_autocmd('LspAttach', {
   group = vim.api.nvim_create_augroup('lsp_attach', {}),
@@ -69,16 +75,14 @@ vim.keymap.set('i', '<CR>', [[
   pumvisible() ? "\<C-y>" : "\<CR>"
 ]], { expr = true, noremap = true })
 
-require("fzf-lua").setup()
-
 require('oil').setup()
+
+require("mru").setup { ignore_filetypes = { "oil" } }
 
 require('Comment').setup({
   toggler   = { line = '<leader>/', block = '<leader>*' },
   opleader  = { line = '<leader>/', block = '<leader>*' },
 })
-
-require("mru").setup { ignore_filetypes = { "oil" } }
 
 vim.keymap.set('n', '<leader>s',         ':update<cr>:source<cr>')
 vim.keymap.set('n', '<leader><leader>',  ':write<cr>')
@@ -87,6 +91,11 @@ vim.keymap.set('n', '<leader>x',         ':silent !chmod u+x % && echo "Made exe
 vim.keymap.set('n', '<leader>o',         ':Oil<cr>')
 vim.keymap.set('n', '<leader>f',         ':FzfLua files resume=true<cr>')
 vim.keymap.set('n', '<leader>g',         ':FzfLua grep resume=true<cr>')
+
+vim.api.nvim_set_hl(0, 'Visual', { bg = '#2563eb', fg = '#ffffff' })
+vim.api.nvim_set_hl(0, 'Search', { bg = '#2563eb', fg = '#ffffff' })
+vim.api.nvim_set_hl(0, 'IncSearch', { bg = '#2563eb', fg = '#ffffff' })
+vim.api.nvim_set_hl(0, 'MatchParen', { bg = '#2563eb', fg = '#ffffff' })
 
 local highlight_group = vim.api.nvim_create_augroup('YankHighlight', { clear = true })
 vim.api.nvim_create_autocmd('TextYankPost', {
