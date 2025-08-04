@@ -57,7 +57,7 @@ vim.api.nvim_create_autocmd('LspAttach', {
     end
   end,
 })
-vim.cmd("set completeopt+=select")
+vim.cmd("set completeopt+=noselect")
 
 require("fzf-lua").setup()
 
