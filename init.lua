@@ -32,7 +32,6 @@ vim.pack.add({
 
 vim.cmd("colorscheme onedark")
 
--- Blue and white highlight colors
 vim.api.nvim_set_hl(0, 'Visual', { bg = '#2563eb', fg = '#ffffff' })
 vim.api.nvim_set_hl(0, 'Search', { bg = '#2563eb', fg = '#ffffff' })
 vim.api.nvim_set_hl(0, 'IncSearch', { bg = '#2563eb', fg = '#ffffff' })
