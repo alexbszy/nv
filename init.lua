@@ -19,7 +19,7 @@ vim.opt.softtabstop = 4
 vim.opt.expandtab   = true
 
 vim.pack.add({
-    "https://github.com/navarasu/onedark.nvim",
+    "https://github.com/olimorris/onedarkpro.nvim",
     "https://github.com/ibhagwan/fzf-lua",
     "https://github.com/nvim-treesitter/nvim-treesitter",
     "https://github.com/neovim/nvim-lspconfig",
@@ -89,8 +89,8 @@ vim.keymap.set('n', '<leader><leader>',  ':write<cr>')
 vim.keymap.set('n', '<leader>q',         ':quit<cr>')
 vim.keymap.set('n', '<leader>x',         ':silent !chmod u+x % && echo "Made executable"<cr>')
 vim.keymap.set('n', '<leader>o',         ':Oil<cr>')
-vim.keymap.set('n', '<leader>f',         ':FzfLua files resume=true<cr>')
-vim.keymap.set('n', '<leader>g',         ':FzfLua grep resume=true<cr>')
+vim.keymap.set('n', '<leader>f',         ':FzfLua files resume=false<cr>')
+vim.keymap.set('n', '<leader>g',         ':FzfLua grep<cr>')
 
 vim.api.nvim_set_hl(0, 'Visual', { bg = '#2563eb', fg = '#ffffff' })
 vim.api.nvim_set_hl(0, 'Search', { bg = '#2563eb', fg = '#ffffff' })
@@ -113,4 +113,18 @@ vim.api.nvim_create_autocmd("CursorMoved", {
 vim.api.nvim_create_autocmd("CmdlineEnter", {
   pattern = "[/\\?]",
   callback = function() vim.o.hlsearch = true end,
+})
+
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = "*",
+  callback = function()
+    local o = vim.opt_local
+    o.autoindent   = false
+    o.smartindent  = false
+    o.cindent      = false
+    o.indentexpr   = ""
+    o.cinoptions   = ""
+
+    o.formatoptions:remove({ "r", "o", "c" })
+  end,
 })
