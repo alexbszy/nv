@@ -77,7 +77,10 @@ vim.keymap.set('i', '<CR>', [[
 
 require('oil').setup()
 
-require("mru").setup { ignore_patterns = { "oil:*", '/private/*' } }
+require("mru").setup { 
+  ignore_patterns = { "oil:*", '/private/*' },
+  persistent = { enabled = true }
+}
 
 require('Comment').setup({
   toggler   = { line = '<leader>/', block = '<leader>*' },
@@ -91,11 +94,6 @@ vim.keymap.set('n', '<leader>x',         ':silent !chmod u+x % && echo "Made exe
 vim.keymap.set('n', '<leader>o',         ':Oil<cr>')
 vim.keymap.set('n', '<leader>f',         ':FzfLua files resume=false<cr>')
 vim.keymap.set('n', '<leader>g',         ':FzfLua grep<cr>')
-
-vim.api.nvim_set_hl(0, 'Visual', { bg = '#2563eb', fg = '#ffffff' })
-vim.api.nvim_set_hl(0, 'Search', { bg = '#2563eb', fg = '#ffffff' })
-vim.api.nvim_set_hl(0, 'IncSearch', { bg = '#2563eb', fg = '#ffffff' })
-vim.api.nvim_set_hl(0, 'MatchParen', { bg = '#2563eb', fg = '#ffffff' })
 
 local highlight_group = vim.api.nvim_create_augroup('YankHighlight', { clear = true })
 vim.api.nvim_create_autocmd('TextYankPost', {
