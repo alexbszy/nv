@@ -25,7 +25,6 @@ vim.pack.add({
     "https://github.com/neovim/nvim-lspconfig",
     "https://github.com/stevearc/oil.nvim",
     "https://github.com/54322/mru.nvim",
-    "https://github.com/tpope/vim-fugitive",
     "https://github.com/lewis6991/gitsigns.nvim",
     "https://github.com/numToStr/Comment.nvim",
 })
